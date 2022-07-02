@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 01 Jul 2022 pada 11.16
+-- Waktu pembuatan: 02 Jul 2022 pada 08.38
 -- Versi server: 10.4.21-MariaDB
 -- Versi PHP: 7.4.29
 
@@ -24,67 +24,21 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `t_anggota`
+-- Struktur dari tabel `t_jurusan`
 --
 
-CREATE TABLE `t_anggota` (
+CREATE TABLE `t_jurusan` (
   `id` int(11) NOT NULL,
-  `ktp` varchar(255) DEFAULT NULL,
-  `nama` varchar(255) DEFAULT NULL,
-  `jk` varchar(255) DEFAULT NULL,
-  `alamat` varchar(255) DEFAULT NULL,
-  `telepon` int(11) DEFAULT NULL
+  `nama` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data untuk tabel `t_anggota`
+-- Dumping data untuk tabel `t_jurusan`
 --
 
-INSERT INTO `t_anggota` (`id`, `ktp`, `nama`, `jk`, `alamat`, `telepon`) VALUES
-(3, '11111', '1111', 'on', 'sdssd', 1111),
-(4, '789379834', 'sdsd', '2', 'dfsds', 2323);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `t_buku`
---
-
-CREATE TABLE `t_buku` (
-  `id` int(11) NOT NULL,
-  `judul` varchar(255) DEFAULT NULL,
-  `pengarang` varchar(255) DEFAULT NULL,
-  `penerbit` varchar(255) DEFAULT NULL,
-  `tahun` year(4) DEFAULT NULL,
-  `katagori` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `t_buku`
---
-
-INSERT INTO `t_buku` (`id`, `judul`, `pengarang`, `penerbit`, `tahun`, `katagori`) VALUES
-(1, 'MMM2', 'MMM2', 'MMM2', 2025, 'novel');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `t_category`
---
-
-CREATE TABLE `t_category` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data untuk tabel `t_category`
---
-
-INSERT INTO `t_category` (`id`, `name`) VALUES
-(2, 'komik'),
-(3, 'majalah'),
-(1, 'novel');
+INSERT INTO `t_jurusan` (`id`, `nama`) VALUES
+(1, 'IPA'),
+(2, 'IPS');
 
 -- --------------------------------------------------------
 
@@ -93,130 +47,106 @@ INSERT INTO `t_category` (`id`, `name`) VALUES
 --
 
 CREATE TABLE `t_login` (
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `jabatan` varchar(255) DEFAULT NULL COMMENT '1. admin 2.user',
+  `id_pendaftar` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL COMMENT '1. daftar 2. acc'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data untuk tabel `t_login`
 --
 
-INSERT INTO `t_login` (`username`, `password`) VALUES
-('nunu', '2f8c3ab806a42e79c774cb09b41a53c8');
+INSERT INTO `t_login` (`id`, `username`, `password`, `jabatan`, `id_pendaftar`, `status`) VALUES
+(1, 'nunu', '2f8c3ab806a42e79c774cb09b41a53c8', '1', NULL, NULL),
+(10, '111', '698d51a19d8a121ce581499d7b701668', '2', 13, 2);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `t_pinjam`
+-- Struktur dari tabel `t_pendaftar`
 --
 
-CREATE TABLE `t_pinjam` (
-  `id` varchar(255) NOT NULL,
-  `id_anggota` int(11) DEFAULT NULL,
-  `tgl_pinjam` date DEFAULT NULL,
-  `tgl_kembali` varchar(255) DEFAULT NULL,
-  `jumlah_buku` int(11) DEFAULT NULL
+CREATE TABLE `t_pendaftar` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `asal_sekolah` varchar(255) DEFAULT NULL,
+  `alamat` varchar(255) DEFAULT NULL,
+  `no_hp` int(11) DEFAULT NULL,
+  `jurusan` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
 --
--- Struktur dari tabel `t_pinjam_detail`
+-- Dumping data untuk tabel `t_pendaftar`
 --
 
-CREATE TABLE `t_pinjam_detail` (
-  `id_pinjam` varchar(255) DEFAULT NULL,
-  `id_buku` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `t_pendaftar` (`id`, `nama`, `asal_sekolah`, `alamat`, `no_hp`, `jurusan`) VALUES
+(13, '1111', '1111', '1111', 111, 'IPA');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `t_anggota`
+-- Indeks untuk tabel `t_jurusan`
 --
-ALTER TABLE `t_anggota`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `t_buku`
---
-ALTER TABLE `t_buku`
+ALTER TABLE `t_jurusan`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `katagori` (`katagori`);
-
---
--- Indeks untuk tabel `t_category`
---
-ALTER TABLE `t_category`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `name` (`name`);
+  ADD KEY `nama` (`nama`);
 
 --
 -- Indeks untuk tabel `t_login`
 --
 ALTER TABLE `t_login`
-  ADD PRIMARY KEY (`username`);
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD KEY `t_login_ibfk_1` (`id_pendaftar`);
 
 --
--- Indeks untuk tabel `t_pinjam`
+-- Indeks untuk tabel `t_pendaftar`
 --
-ALTER TABLE `t_pinjam`
+ALTER TABLE `t_pendaftar`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_anggota` (`id_anggota`);
-
---
--- Indeks untuk tabel `t_pinjam_detail`
---
-ALTER TABLE `t_pinjam_detail`
-  ADD KEY `id_pinjam` (`id_pinjam`),
-  ADD KEY `id_buku` (`id_buku`);
+  ADD KEY `jurusan` (`jurusan`);
 
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT untuk tabel `t_anggota`
+-- AUTO_INCREMENT untuk tabel `t_jurusan`
 --
-ALTER TABLE `t_anggota`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT untuk tabel `t_buku`
---
-ALTER TABLE `t_buku`
+ALTER TABLE `t_jurusan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `t_category`
+-- AUTO_INCREMENT untuk tabel `t_login`
 --
-ALTER TABLE `t_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+ALTER TABLE `t_login`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT untuk tabel `t_pendaftar`
+--
+ALTER TABLE `t_pendaftar`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Ketidakleluasaan untuk tabel `t_buku`
+-- Ketidakleluasaan untuk tabel `t_login`
 --
-ALTER TABLE `t_buku`
-  ADD CONSTRAINT `t_buku_ibfk_1` FOREIGN KEY (`katagori`) REFERENCES `t_category` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `t_login`
+  ADD CONSTRAINT `t_login_ibfk_1` FOREIGN KEY (`id_pendaftar`) REFERENCES `t_pendaftar` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `t_pinjam`
+-- Ketidakleluasaan untuk tabel `t_pendaftar`
 --
-ALTER TABLE `t_pinjam`
-  ADD CONSTRAINT `t_pinjam_ibfk_1` FOREIGN KEY (`id_anggota`) REFERENCES `t_anggota` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `t_pinjam_detail`
---
-ALTER TABLE `t_pinjam_detail`
-  ADD CONSTRAINT `t_pinjam_detail_ibfk_1` FOREIGN KEY (`id_pinjam`) REFERENCES `t_pinjam` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `t_pinjam_detail_ibfk_2` FOREIGN KEY (`id_buku`) REFERENCES `t_buku` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `t_pendaftar`
+  ADD CONSTRAINT `t_pendaftar_ibfk_1` FOREIGN KEY (`jurusan`) REFERENCES `t_jurusan` (`nama`) ON DELETE NO ACTION ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
