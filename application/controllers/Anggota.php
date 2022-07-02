@@ -22,8 +22,8 @@ class Anggota extends CI_Controller {
 	{
 		$data = array(
 			'page' => 'pages/anggota/main',
-			'data' => $this->db->get("t_anggota")->result(),
-			
+			'data' => $this->db->query("SELECT a.*, b.status FROM t_pendaftar a LEFT JOIN t_login b ON b.id_pendaftar = a.id")->result(),
+	
 		);
 		
 		$this->load->view('template', $data);
@@ -33,6 +33,7 @@ class Anggota extends CI_Controller {
 	{
 		$data = array(
 			'page' => 'pages/anggota/form',
+			'jurusan' => $this->db->get("t_jurusan")->result()
 		);
 		
 		$this->load->view('template', $data);
@@ -44,14 +45,30 @@ class Anggota extends CI_Controller {
 
 
 		$data = array(
-			'nama' => $_POST['nama'],
-			'jk' => $_POST['jk'], 
-			'ktp' => $_POST['ktp'],
-			'telepon' => $_POST['telepon'],
+			'nama' => $_POST['nama'], 
+			'asal_sekolah' => $_POST['sekolah'],
 			'alamat' => $_POST['alamat'],
+			'no_hp' => $_POST['no_hp'],
+			'jurusan' => $_POST['jurusan'],
 			
 		);
-		$this->db->insert('t_anggota', $data);
+		// insert 
+		$this->db->insert("t_pendaftar", $data);
+
+		// get data
+		$sql = $this->db->where($data)->get("t_pendaftar")->row();
+
+
+		$data_user = array(
+			'username' => $_POST['username'],
+			'password' => md5($_POST['password']),
+			'id_pendaftar' => $sql->id, 
+			'status' => '2',
+			'jabatan' => '2',
+		);
+
+		// insert 
+		$this->db->insert("t_login", $data_user);
 		redirect('/anggota');
 			
 
@@ -63,8 +80,9 @@ class Anggota extends CI_Controller {
 
 		$data = array(
 			'page' => 'pages/anggota/form_update',
-			'category' => $this->db->get('t_category')->result(),
-			'data' => $this->db->where('id', $id)->get('t_anggota')->row()
+			'data' => $this->db->where('id', $id)->get('t_pendaftar')->row(),
+			'jurusan' => $this->db->get("t_jurusan")->result(),
+			'data_user' => $this->db->where('id_pendaftar', $id)->get('t_login')->row()
 		);
 		
 		$this->load->view('template', $data);
@@ -78,14 +96,42 @@ class Anggota extends CI_Controller {
 
 		
 		$data = array(
-			'nama' => $_POST['nama'],
-			'jk' => $_POST['jk'], 
-			'ktp' => $_POST['ktp'],
-			'telepon' => $_POST['telepon'],
+			'nama' => $_POST['nama'], 
+			'asal_sekolah' => $_POST['sekolah'],
 			'alamat' => $_POST['alamat'],
+			'no_hp' => $_POST['no_hp'],
+			'jurusan' => $_POST['jurusan'],
 			
 		);
-		$this->db->set($data)->where('id', $id)->update('t_anggota');
+		// update
+		$this->db->set($data)->where('id', $id)->update("t_pendaftar");
+
+		// get data
+		$sql = $this->db->where('id',$id)->get("t_pendaftar")->row();
+
+		if(!empty($_POST['username']) && !empty($_POST['password']) ){
+
+			$data_user = array(
+				'username' => $_POST['username'],
+				'password' => md5($_POST['password']),
+				'status' => 2
+				
+			);
+		}elseif(!empty($_POST['username']) && empty($_POST['password']) ){
+			$data_user = array(
+				'username' => $_POST['username'],
+				'status' => 2
+			);
+		}elseif(empty($_POST['username']) && !empty($_POST['password']) ){
+			$data_user = array(
+				'password' => md5($_POST['password']),
+				'status' => 2
+			);
+		}
+	
+		// update
+		$this->db->set($data_user)->where('id_pendaftar', $id)->update("t_login");
+
 		redirect('/anggota');
     
 
@@ -94,26 +140,28 @@ class Anggota extends CI_Controller {
 
 
 
-	public function faq_detail_delete(){
-
-		$id = $_POST['id'];
-		$id2 = $_POST['ids'];
-
-		$this->db->where('id', $id2)->delete('tbl_faqsub');
-		redirect('faq/detail/'.$id);
-			
-	}
 
 	public function delete(){
 
 		$id = $_POST['id'];
 
-		$this->db->where('id', $id)->delete('t_anggota');
+		$this->db->where('id', $id)->delete('t_pendaftar');
 		redirect('/anggota');
 			
 	}
 	
 	
+	public function info()
+	{
+		$id =  $_SESSION['id_pendaftar'];
+		$data = array(
+			'page' => 'pages/anggota/info',
+			'data' => $this->db->where("id", $id)->get("t_pendaftar")->row(),
+			'data_user' => $this->db->where("id_pendaftar", $id)->get("t_login")->row(),
 	
+		);
+		
+		$this->load->view('template', $data);
+	}
 
 }

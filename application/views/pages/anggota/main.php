@@ -34,10 +34,11 @@
                   <tr>
                                                                 <th width="5px">No</th>
                                                                 <th>Nama</th>
-                                                                <th width="5px">KTP</th>
-                                                                <th width="5px">Jenis Kelamin</th>
+                                                                <th width="5px">Asal Sekolah</th>
                                                                 <th width="5px">Alamat</th>
-                                                                <th width="5px">No Tlp</th>
+                                                                <th width="5px">No Hp</th>
+                                                                <th width="5px">Jurusan</th>
+                                                                <th width="5px">Status</th>
                                                                 <th width="150px">Choose</th>
                                                                 
                                                             </tr>
@@ -47,11 +48,11 @@
                                                                     <tr>
                                                                         <td><?= ++$no?></td>
                                                                         <td><?= $d->nama?></td>
-                                                                        <td><?= $d->ktp?></td>
-                                                                        <td><?=  $d->jk?></td>
+                                                                        <td><?= $d->asal_sekolah?></td>
                                                                         <td><?=  $d->alamat?></td>
-                                                                        <td><?=  $d->telepon?></td>
-                                                                       
+                                                                        <td><?=  $d->no_hp?></td>
+                                                                        <td><?=  $d->jurusan?></td>
+                                                                        <td><?php if($d->status == 1){ echo "daftar";}else{echo "Acc";}  ?></td>
                                                                         <td>
                                                                          
                                                                             <a href="<?= base_url('anggota/form_update/').$d->id?>"  data-toggle="tooltip" data-placement="top" title="" data-original-title="update"> <button class="btn btn-default btn-icon"><i class="fa fa-edit"></i></button></a>

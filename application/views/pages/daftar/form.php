@@ -33,109 +33,120 @@
   <!-- summernote -->
   <link rel="stylesheet" href="<?= base_url('assets/plugins/summernote/summernote-bs4.min.css') ?>">
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-mini layout-fixed" style="padding: 100px;">
 <div class="wrapper">
 
-  <!-- Preloader -->
-  <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="<?= base_url('assets/dist/img/Logo.png')?>" alt="Logo" height="60" width="60">
-  </div>
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-    
-    </ul>
 
-    
-  <!-- </nav> -->
-  <!-- /.navbar -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
+<div class="row">
+<div class="col-md-6">
+<div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Cek Status Pendaftaran</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+            
+                <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr> <th >No Hp</th>
+                  <th>Nama</th>                         <th>Status</th>
+                                                                
+                                                               
+                                                                
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php foreach($datas as $d){?>
+                                                                    <tr>
+                                                                    <td><?= $d->no_hp?></td>
+                                                                        <td><?= $d->nama?></td>
+                                                                     
+                                                                        <td><?php if($d->status == 1){ echo "daftar";}else{echo "Acc silahkan login <a href=".base_url('login').">link</a>";}  ?></td>
+                                                                  
+                                                                    </tr>
+                                                                <?php }?>
+                 
+                  </tbody>
+                 
+                </table>
+                  </div>
+                  
+
+               
+              
+        
+            </div>
+            
+</div>
+          <!-- left column -->
+          <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Form Pendaftaran</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form action="<?= base_url('daftar/cek')?>" method="post" >
+                <div class="card-body">
+                  <div class="form-group">
+                    <label >Nama </label>
+                    <input type="text" class="form-control"  name="nama" >
+                  </div>
+
+                  <div class="form-group">
+                    <label >Asal Sekolah</label>
+                    <input type="text" class="form-control" name="sekolah">
+                  </div>
+
+                  <div class="form-group">
+                    <label >Alamat</label>
+                    <textarea class="form-control" name="alamat"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label >No Hp </label>
+                    <input type="text" class="form-control" name="no_hp">
+                  </div>
+
+                  <div class="form-group">
+                    <label >Jurusan </label>
+                    <select class="form-control" name="jurusan">
+                      <?php foreach($data as $s){?>
+                      <option value="<?= $s->nama?>"><?= $s->nama?></option>
+                      <?php } ?>
+                      </select>
+
+                  </div>
+
+                  <div class="form-group">
+                    <label >Username </label>
+                    <input type="text" class="form-control" name="username">
+                  </div>
+
+                  <div class="form-group">
+                    <label >Password </label>
+                    <input type="text" class="form-control" name="password">
+                  </div>
+
+                
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+
+
+         
+
+          </div>
+       
       
-      <li class="nav-item">
-     
-        <a class="nav-link"  href="<?= base_url('logout')?>" role="button">
-        <img src="<?= base_url('assets/images/ic.png')?>" >
-          <!-- fa-sign-out  -->
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
-
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-      <img src="<?= base_url('assets/dist/img/Logo.png')?>" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light" style="color:#f79d06">Tes Soal</span>
-    </a>
-
-    <!-- Sidebar -->
-  
-
-    
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-         
-          <li class="nav-item">
-
-          <?php if(!empty($_SESSION['id_user'])){?>
-            <a href="<?= base_url('anggota')?>" class="nav-link  <?php if($this->uri->segment(1) == 'news'){ echo 'active';} ?>">
-              <i class="nav-icon fas fa-book"></i>
-              <p>
-               Pendaftar
-                
-              </p>
-            </a>
-
-            <?php }else{?>
-              <a href="<?= base_url('pendaftar/info')?>" class="nav-link  <?php if($this->uri->segment(2) == 'info'){ echo 'active';} ?>">
-              <i class="nav-icon fas fa-book"></i>
-              <p>
-               Data Diri
-                
-              </p>
-            </a>
-            <?php } ?>
-          </li>
-
-         
-
-        
-        
-        
-        
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-
-  <!-- Content Wrapper. Contains page content -->
-  <?php $this->load->view($page); ?>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2022 <a href="#">Tes Soal</a>.</strong>
-    All rights reserved.
-   
-  </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+        </div>
 </div>
 <!-- ./wrapper -->
 
@@ -271,8 +282,7 @@
 
     
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      "responsive": true, "lengthChange": false, "autoWidth": false
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,

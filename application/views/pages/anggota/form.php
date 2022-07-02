@@ -29,69 +29,60 @@
                     <div class="col-sm-6">
                       <!-- text input -->
                       <div class="form-group">
-                        <label>NOMOR KTP</label>
-                        <input type="text" class="form-control" name="ktp">
+                        <label>Nama</label>
+                        <input type="text" class="form-control" name="nama">
                       </div>
                     </div>
 
                     <div class="col-sm-6">
                       <!-- text input -->
                       <div class="form-group">
-                        <label>Nama</label>
-                        <input type="text" class="form-control" name="nama">
+                        <label>Asal Sekolah</label>
+                        <input type="text" class="form-control" name="sekolah">
                       </div>
                     </div>
-
-
-                    
-                  
                   </div>
+
                   <div class="row">
                     <div class="col-sm-6">
+                      <!-- text input -->
                       <div class="form-group">
-                        <label>Jenis Kelamin</label>
-                        <!-- <input type="text" class="form-control" name="jk"> -->
-
-                        <div class="row">
-                            <div class="col-sm-6">
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="jk" id="jk1" value="1" checked>
-                                <label class="form-check-label" for="flexRadioDefault1">
-                                Laki - Laki
-                                </label>
-                              </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="jk" id="jk2" value="2">
-                              <label class="form-check-label" for="flexRadioDefault2">
-                                Perempuan
-                              </label>
-                            </div>
-                            </div>
-                          </div>
-
-
-
-
-
-
-                     
-
+                        <label>No HP</label>
+                        <input type="text" class="form-control" name="no_hp">
                       </div>
                     </div>
-
 
                     <div class="col-sm-6">
+                      <!-- text input -->
                       <div class="form-group">
-                        <label>No Telepon</label>
-                        <input type="text" class="form-control" name="telepon">
+                        <label>Jurusan</label>
+                        <select class="form-control" name="jurusan">
+                      <?php foreach($jurusan as $s){?>
+                      <option value="<?= $s->nama?>"><?= $s->nama?></option>
+                      <?php } ?>
+                      </select>
                       </div>
                     </div>
-                   
                   </div>
 
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" class="form-control" name="username">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <!-- text input -->
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input type="text" class="form-control" name="password">
+                      </div>
+                    </div>
+                  </div>
+               
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="form-group">

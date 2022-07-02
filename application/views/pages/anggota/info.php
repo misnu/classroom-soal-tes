@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">anggota</h1>
+            <h1 class="m-0">Data Diri</h1>
           </div><!-- /.col -->
         
         </div><!-- /.row -->
@@ -20,9 +20,8 @@
           <div class="col-12">
             
           <div class="card card-warning">
-            
+          
               <!-- /.card-header -->
-              <form action="<?= base_url('anggota_update/'.$this->uri->segment(3))?>" method="post" >
               <div class="card-body">
               
               <div class="row">
@@ -56,11 +55,7 @@
                   <!-- text input -->
                   <div class="form-group">
                     <label>Jurusan</label>
-                    <select class="form-control" name="jurusan">
-                  <?php foreach($jurusan as $s){?>
-                  <option value="<?= $s->nama?>"><?= $s->nama?></option>
-                  <?php } ?>
-                  </select>
+                    <input type="text" class="form-control" name="no_hp" value="<?= $data->jurusan?>">
                   </div>
                 </div>
               </div>
@@ -70,7 +65,7 @@
                   <!-- text input -->
                   <div class="form-group">
                     <label>Username</label>
-                    <input type="text" class="form-control" name="username" value="<?= $data_user->username?>">
+                    <input type="text" class="form-control" name="username" value="<?= @$data_user->username?>">
                   </div>
                 </div>
 
@@ -100,14 +95,6 @@
         
             
           </div>
-              <!-- /.card-body -->
-              <div class="card-footer">
-                  <button type="submit" class="btn btn-default">Save</button>
-                
-                </div>
-
-
-</form>
             </div>
         </div>
         <!-- /.row -->

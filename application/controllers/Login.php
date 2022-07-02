@@ -29,14 +29,29 @@ class Login extends CI_Controller {
 		if(!empty($sql)){
 			$data_session =  array(
 
-				'username' => $sql->username
+				'username' => $sql->username,
+				'id_pendaftar' =>$sql->id_pendaftar
 				
 			);
-		
-	
 			  $this->session->set_userdata($data_session);
+
+			  if(empty($sql->id_pendaftar)){
+				$message = "anggota";
+			  }else{
+				if($sql->status =='1'){
+					$data_session = array(
+						'error' => 'Menunggu verifikasi admin',
+					);
 		
-			$message = "anggota";
+					$this->session->set_userdata($data_session);
+					$message = "/";
+				}else{
+					$message = "pendaftar/info";
+				}
+				
+			  }
+		
+			
 		}else{
 
 			$data_session = array(
@@ -54,7 +69,7 @@ class Login extends CI_Controller {
 
 		$this->session->sess_destroy();
 
-		redirect('/');
+		redirect('/login');
 	}
 
 
